@@ -35,19 +35,15 @@ public class TestAppointmentForm {
         appform.setAppointmentEmail(parameter.getAppointmentEmail());
         appform.setAppointmentState(parameter.getAppointmentState());
         appform.setAppointmentStore(parameter.getAppointmentStore());
+        //appform.setAppointmentStoreAddress(parameter.getAppointmentStoreAddress());
         appform.setAgreedToSubmitData(true);
         appform.setRecaptcha(true);
 
         appform.execute();
-
-        //WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        //WebElement swagLabsElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("title")));
-        //assertTrue(swagLabsElement.isDisplayed(), "The element with class 'title' was not found or not displayed as expected after login.");
     }
 
     @AfterMethod
     public void tearDown() {
-        // Close the browser and quit the WebDriver after each test
         if (driver != null) {
             driver.quit();
         }

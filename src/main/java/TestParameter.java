@@ -30,5 +30,6 @@ public class TestParameter {
     public String getAppointmentEmail() { return properties.getProperty("appointment.email"); }
     public String getAppointmentState() { return properties.getProperty("appointment.state"); }
     public String getAppointmentStore() { return properties.getProperty("appointment.store"); }
+    public String getAppointmentStoreAddress() { return properties.getProperty("appointment.storeaddress"); }
 
 }

@@ -2,7 +2,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
@@ -38,28 +37,29 @@ public class AppointmentForm {
 
         stateDropdownTrigger.click();
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("StateId_hidden")));
-
-        WebElement stateDropdown = driver.findElement(By.id("StateId"));
-        Select stateSelect = new Select(stateDropdown);
-
-        stateSelect.selectByVisibleText(state);
+        WebElement stateSelect = driver.findElement(By.id("StateId"));
+        stateSelect.sendKeys(state);
     }
 
     public void setAppointmentStore(String store) {
-        WebElement storeDropdownTrigger = driver.findElement(By.xpath("//label[contains(text(), 'Store')]//following-sibling::span//input[@class='e-input-group e-control-wrapper e-input e-ddl e-lib e-keyboard']"));
+        WebElement storeDropdownTrigger = driver.findElement(By.xpath("//label[text()='Store']//following-sibling::span[@aria-labelledby='BranchId_hidden']"));
 
         storeDropdownTrigger.click();
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("BranchId_hidden")));
-
         WebElement storeDropdown = driver.findElement(By.id("BranchId"));
-        Select storeSelect = new Select(storeDropdown);
-
-        storeSelect.selectByVisibleText(store);
+        storeDropdown.sendKeys(store);
     }
+
+    /*public void setAppointmentStoreAddress(String storeAddress) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        WebElement textarea = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("SelectedLocation")));
+
+        String actualValue = textarea.getAttribute("value");
+        if (!actualValue.equals(storeAddress)) {
+            throw new AssertionError("Textarea value is incorrect. Expected: " + storeAddress + ", but found: " + actualValue);
+        }
+
+    }*/
 
     public void setAgreedToSubmitData(boolean isChecked) {
         WebElement checkbox = driver.findElement(By.id("AgreedToSubmitData"));
@@ -90,7 +90,11 @@ public class AppointmentForm {
     }
 
     public void execute() {
-        WebElement confirmButton = driver.findElement(By.id("SaveAppointment"));
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+
+        WebElement confirmButton = wait.until(ExpectedConditions.elementToBeClickable(By.id("SaveAppointment")));
+
         confirmButton.click();
     }
 
